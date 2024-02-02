@@ -13,7 +13,12 @@ app.get("*", (req, res) => {
 });
 
 app.post("*", async (req, res) => {
-  res.send((await handler(req)) || "ok");
+  res.send((await handler(req, res)) || "ok");
+});
+
+app.use((err, _, res) => {
+  console.error(err);
+  res.status(500).send("Something went wrong!");
 });
 
 const PORT = process.env.PORT || 5000;
